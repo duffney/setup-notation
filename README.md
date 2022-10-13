@@ -21,7 +21,7 @@ steps:
       0.9.0-alpha.1
 ```
 
-A plugin for Azure Key Vault can be added to the `notation` CLI:
+A [plugin for Azure Key Vault](https://github.com/Azure/notation-azure-kv) can be added to the `notation` CLI:
 
 ```
 steps:
