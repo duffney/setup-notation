@@ -1,0 +1,23 @@
+name: setup-gh
+description: Setup Notation CLI on GitHub Actions runners
+inputs:
+  version:
+    description: Version of Notation CLI to install
+    required: false
+    default: 0.9.0-alpha.1
+  key_name:
+    description: Name of the signing key for Notation
+    required: false
+    default: example
+  certificate_key_id:
+    description: Key identifier for the signing certificate
+    required: false
+  plugin_name:
+    description: Name of the Notation plugin to install
+    required: false
+  plugin_version:
+    description: Version of the Notation plugin to install
+    required: false
+runs:
+  using: node16
+  main: dist/index.js
