@@ -1,5 +1,8 @@
 name: setup-gh
 description: Setup Notation CLI on GitHub Actions runners
+branding:
+  icon: check-circle
+  color: blue
 inputs:
   version:
     description: Version of Notation CLI to install
