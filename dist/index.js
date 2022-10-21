@@ -159,7 +159,7 @@ function getDownloadPluginObject(name, version) {
 }
 
 function addPluginCert(keyName,keyId){
-    if (keyId.includes('kv.vault.azure.net')){
+    if (keyId.includes('vault.azure.net')){
         const output = execSync(`notation key add --name ${keyName} --id ${keyId} --default --plugin azure-kv`, { encoding: 'utf-8' });
         console.log('notation cert output:\n', output);
     } // Add logic for additional Notation plugins here
