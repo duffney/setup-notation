@@ -13,7 +13,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: setup-azure-kv
         with:
-          version: 'v0.12.0-beta.1.dev.20221127'
+          version: '0.12.0-beta.1.dev.20221127'
           key_name: 'example'
           certificate_key_id: 'https://example-kv.vault.azure.net/keys/exampleCert/516954296d4d72db64644b2ab35721c2'
           plugin_name: 'notation-azure-kv'
