@@ -13,7 +13,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: setup
         with:
-          version: '0.9.0-alpha.1'
+          version: '0.12.0-beta.1'
           key_name: 'example'
       - name: check version
         run: notation --version
