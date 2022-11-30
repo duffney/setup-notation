@@ -11,6 +11,7 @@ const { getDownloadObject, getDownloadPluginObject, addPluginCert, versionCheck 
 const { get } = __nccwpck_require__(3685);
 const fs = __nccwpck_require__(7147);
 const mv = __nccwpck_require__(5210);
+const { version } = __nccwpck_require__(2037);
 const execSync = (__nccwpck_require__(2081).execSync);
 
 async function setup() {
@@ -19,6 +20,9 @@ async function setup() {
     const version = core.getInput('version'); //"0.9.0-alpha.1";
     const keyName = core.getInput('key_name');
     
+    // Check if the NotationCli version is supported
+    versionCheck(version);
+
     // Check if the NotationCli version is supported
     versionCheck(version);
 
@@ -45,8 +49,8 @@ async function setup() {
     core.addPath(path.join(pathToCLI, download.binPath));
 
     // Install Notation plugin
-    const pluginName = core.getInput('plugin_name'); // "notation-azure-kv";
-    const pluginVersion = core.getInput('plugin_version'); //"0.3.1-alpha.1";
+    const pluginName = core.getInput('plugin_name');
+    const pluginVersion = core.getInput('plugin_version');
 
     if (pluginName) {
       setupPlugin(pluginName, pluginVersion, keyName);
