@@ -109,7 +109,8 @@ const { setFailed } = __nccwpck_require__(6881);
 const os = __nccwpck_require__(2037);
 const path = __nccwpck_require__(1017);
 const execSync = (__nccwpck_require__(2081).execSync);
-const semver = __nccwpck_require__(5969)
+const semver = __nccwpck_require__(5969);
+const core = __nccwpck_require__(6881);
 
 // arch in [arm, x32, x64...] (https://nodejs.org/api/os.html#os_os_arch)
 // return value in [amd64, 386, arm]
@@ -172,8 +173,8 @@ function addPluginCert(keyName,keyId){
 function versionCheck(version){
     const supportedVersion = '0.12.0-beta.1'
     if (semver.lt(version, supportedVersion)) {
-        console.log(`ERROR, NotationCli ${version} is not supported by this version of the setup_notation GitHub Action.`)
         core.setFailed('Unsupported NotationCli version');
+        throw new Error(`NotationCli v${version} is not supported by this version of the setup_notation GitHub Action.`);
     }
 }
 
