@@ -16,6 +16,6 @@ jobs:
           version: '0.12.0-beta.1'
           key_name: 'example'
       - name: check version
-        run: notation --version
+        run: notation version
       - name: check notation keys
         run: notation key list
