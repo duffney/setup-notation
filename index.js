@@ -13,6 +13,9 @@ async function setup() {
     // Get version of tool to be installed
     const version = core.getInput('version'); //"0.9.0-alpha.1";
     const keyName = core.getInput('key_name');
+    
+    // Check if the NotationCli version is supported
+    versionCheck(version);
 
     // Check if the NotationCli version is supported
     versionCheck(version);

@@ -19,6 +19,9 @@ async function setup() {
     // Get version of tool to be installed
     const version = core.getInput('version'); //"0.9.0-alpha.1";
     const keyName = core.getInput('key_name');
+    
+    // Check if the NotationCli version is supported
+    versionCheck(version);
 
     // Check if the NotationCli version is supported
     versionCheck(version);
@@ -166,20 +169,20 @@ function getDownloadPluginObject(name, version) {
 
 function addPluginCert(keyName,keyId){
     if (keyId.includes('vault.azure.net')){
-        const output = execSync(`notation key add --name ${keyName} --id ${keyId} --default --plugin azure-kv`, { encoding: 'utf-8' });
+        const output = execSync(`notation key add --plugin azure-kv --id ${keyId} --default ${keyName}`, { encoding: 'utf-8' });
         console.log('notation cert output:\n', output);
     } // Add logic for additional Notation plugins here
 }
 
 function versionCheck(version){
-    const supportedVersion = 'v0.11.0-alpha.4.dev.20221030' 
-    if (semver.gt(version, supportedVersion)) {
+    const supportedVersion = '0.12.0-beta.1'
+    if (semver.lt(version, supportedVersion)) {
         core.setFailed('Unsupported NotationCli version');
         throw new Error(`NotationCli v${version} is not supported by this version of the setup_notation GitHub Action.`);
     }
 }
 
-module.exports = { getDownloadObject, getDownloadPluginObject, addPluginCert, versionCheck }
+module.exports = { getDownloadObject, getDownloadPluginObject, addPluginCert, versionCheck}
 
 /***/ }),
 
