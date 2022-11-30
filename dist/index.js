@@ -7,10 +7,11 @@
 const path = __nccwpck_require__(1017);
 const core = __nccwpck_require__(6881);
 const tc = __nccwpck_require__(3720);
-const { getDownloadObject, getDownloadPluginObject, addPluginCert } = __nccwpck_require__(4778);
+const { getDownloadObject, getDownloadPluginObject, addPluginCert, versionCheck } = __nccwpck_require__(4778);
 const { get } = __nccwpck_require__(3685);
 const fs = __nccwpck_require__(7147);
 const mv = __nccwpck_require__(5210);
+const { version } = __nccwpck_require__(2037);
 const execSync = (__nccwpck_require__(2081).execSync);
 
 async function setup() {
