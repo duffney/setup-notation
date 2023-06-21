@@ -9,10 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: azure-resource-login #provide credentials from azure to use resources eg: key vault
-        uses: Azure/azure-resource-login-action@v1.0.0
+      - user: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: hashicorp/setup-terraform@v2
 
       - name: Terraform init
