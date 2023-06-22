@@ -25,9 +25,9 @@ jobs:
       - name: debug
         run: |
           VAR=$(terraform output -raw akv_name 2>/dev/null) 
-          echo "MY_VARIABLE=hello" >> $GITHUB_ENV
-          echo $MY_VARIABLE
-          echo $VAR
+          split=$(echo -e "\n$VAR\n" | cut -d "::" -f 1)
+          echo $split
+          printf "$(terraform output -raw akv_name)"
         working-directory: ./terraform
 
       - name: Export Terraform output
