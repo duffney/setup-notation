@@ -24,12 +24,6 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./terraform
 
-      - name: debug
-        run: |
-          output=$(terraform output akv_name)
-          echo $output
-        working-directory: ./terraform
-
       - name: Export Terraform output
         id: tf 
         run: |
@@ -64,15 +58,10 @@ jobs:
           certificate_key_id: ${{ steps.kid.outputs.SIGN_CERT_KEY_ID }} 
           plugin_name: notation-azure-kv
           plugin_version: 0.6.0 
-          #      - name: Build and Publish Docker image
-          #        run: |
-          #          docker build --no-cache=true . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-          #          docker run ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-          #          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-          #      - name: Verify key generation
-          #        run: notation key list 
-          #      - name: Sign the published Docker image
-          #        run: notation sign ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+      - name: Build and Publish Docker image
+        run: |
+          docker build -t ${{ step.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1 https://github.com/wabbit-networks/net-monitor.git#main
+          docker push -t ${{ step.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v50011
       - name: Terraform destroy
         run: terraform destroy -auto-approve
         working-directory: ./terraform
