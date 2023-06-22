@@ -25,9 +25,9 @@ jobs:
       - name: Export Terraform output
         id: tf 
         run: |
-          echo "AKV_NAME=${terraform output -raw akv_name)" >> GITHUB_OUTPUT
+          echo "AKV_NAME=$(terraform output -raw akv_name)" >> GITHUB_OUTPUT
           echo "ACR_NAME=$(terraform output -raw acr_name)" >> GITHUB_OUTPUT
-          echo "CERT_NAME=${terraform output -raw cert_name)" >> GITHUB_OUTPUT
+          echo "CERT_NAME=$(terraform output -raw cert_name)" >> GITHUB_OUTPUT
 
       - name: Get Signing Cert Key ID & Notation Credentials
         id: kid
@@ -45,7 +45,7 @@ jobs:
             --output tsv)
 
           echo "SIGN_CERT_KEY_ID=${keyID}" >> $GITHUB_OUTPUT
-          echo "NOTATION_USERNAME=${{ inputs.certName }}" >> $GITHUB_OUTPUT
+          echo "NOTATION_USERNAME=${{ steps.tf.outputs.CERT_NAME }}" >> $GITHUB_OUTPUT
           echo "NOTATION_PASSWORD=${tokenPassword}" >> $GITHUB_OUTPUT
       - name: Setup Notation with azure-kv plugin
         uses: Duffney/setup-notation@v1.0.0
