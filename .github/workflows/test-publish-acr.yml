@@ -60,8 +60,8 @@ jobs:
           plugin_version: 0.6.0 
       - name: Build and Publish Docker image
         run: |
-          docker build -t ${{ step.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1 https://github.com/wabbit-networks/net-monitor.git#main
-          docker push -t ${{ step.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v50011
+          docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1 https://github.com/wabbit-networks/net-monitor.git#main
+          docker push -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v50011
       - name: Terraform destroy
         run: terraform destroy -auto-approve
         working-directory: ./terraform
