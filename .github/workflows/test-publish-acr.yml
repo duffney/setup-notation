@@ -63,8 +63,13 @@ jobs:
           plugin_version: 0.6.0 
       - name: Build and Publish Docker image
         run: |
-          docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1 https://github.com/wabbit-networks/net-monitor.git#main
-          docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1
+          docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
+          docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v${{ github.sha }}
+      - name: Sign container image
+        run: |
+          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} ${{ steps.tf.outputs.ACR_NAME }}.azurecr.io/net-monitor:${{ github.sha }} \
+          -u ${{ step.kid.outputs.NOTATION_USERNAME }} \
+          -p ${{ step.kid.outputs.NOTATION_PASSWORD }}
       - name: Terraform destroy
         run: terraform destroy -auto-approve
         working-directory: ./terraform
