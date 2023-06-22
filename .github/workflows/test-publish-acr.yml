@@ -28,6 +28,7 @@ jobs:
           echo "AKV_NAME=$(terraform output -raw akv_name)" >> $GITHUB_OUTPUT
           echo "ACR_NAME=$(terraform output -raw acr_name)" >> $GITHUB_OUTPUT
           echo "CERT_NAME=$(terraform output -raw cert_name)" >> $GITHUB_OUTPUT
+        working-directory: ./terraform
 
       - name: Get Signing Cert Key ID & Notation Credentials
         id: kid
