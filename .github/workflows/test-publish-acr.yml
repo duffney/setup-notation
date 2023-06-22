@@ -13,6 +13,8 @@ jobs:
         with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
 
       - name: Terraform init
         run: terraform init
