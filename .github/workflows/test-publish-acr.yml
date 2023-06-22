@@ -23,7 +23,7 @@ jobs:
         working-directory: ./terraform
 
       - name: debug
-        run: terraform output -raw akv_name 2>/dev/null
+        run: VAR=terraform output -raw akv_name && echo $VAR
         working-directory: ./terraform
 
       - name: Export Terraform output
