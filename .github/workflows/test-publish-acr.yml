@@ -25,9 +25,13 @@ jobs:
       - name: Export Terraform output
         id: tf 
         run: |
-          echo "AKV_NAME=$(terraform output -raw akv_name)" >> GITHUB_OUTPUT
-          echo "ACR_NAME=$(terraform output -raw acr_name)" >> GITHUB_OUTPUT
-          echo "CERT_NAME=$(terraform output -raw cert_name)" >> GITHUB_OUTPUT
+          echo "AKV_NAME=$(terraform output -raw akv_name)" >> $GITHUB_OUTPUT
+          echo "ACR_NAME=$(terraform output -raw acr_name)" >> $GITHUB_OUTPUT
+          echo "CERT_NAME=$(terraform output -raw cert_name)" >> $GITHUB_OUTPUT
+
+      - name: Debug
+        run: |
+          echo "${{ steps.tf.outputs.AKV_NAME }}"
 
       - name: Get Signing Cert Key ID & Notation Credentials
         id: kid
@@ -37,7 +41,7 @@ jobs:
             --query "kid" --only-show-errors --output tsv)
 
           tokenPassword=$(az acr token create \
-            --name "${{ inputs.certName }}" \
+            --name "${{ steps.tf.outputs.CERT_NAME }}" \
             --registry ${{ steps.tf.outputs.ACR_NAME }} \
             --scope-map _repositories_admin \
             --query 'credentials.passwords[0].value' \
