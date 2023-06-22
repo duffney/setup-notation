@@ -24,6 +24,11 @@ jobs:
 
       - name: debug
         run: |
+          echo "test" 
+        working-directory: ./terraform
+
+      - name: debug
+        run: |
           printf "$(terraform output -raw akv_name)"
         working-directory: ./terraform
 
