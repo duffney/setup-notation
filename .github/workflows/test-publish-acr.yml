@@ -23,7 +23,11 @@ jobs:
         working-directory: ./terraform
 
       - name: debug
-        run: VAR=$(terraform output -raw akv_name) && echo $VAR
+        run: |
+          VAR=$(terraform output -raw akv_name) 
+          echo "MY_VARIABLE=hello" >> $GITHUB_ENV
+          echo $MY_VARIABLE
+          echo $VAR
         working-directory: ./terraform
 
       - name: Export Terraform output
