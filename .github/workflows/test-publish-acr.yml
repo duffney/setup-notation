@@ -26,7 +26,7 @@ jobs:
 
       - name: debug
         run: |
-          output=$(terraform akv_name)
+          output=$(terraform output akv_name)
           echo $output
         working-directory: ./terraform
 
