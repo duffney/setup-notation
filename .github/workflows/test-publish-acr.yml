@@ -32,6 +32,9 @@ jobs:
           echo "CERT_NAME=$(terraform output -raw cert_name)" >> $GITHUB_OUTPUT
         working-directory: ./terraform
 
+      - name: Log in to ACR
+        run: az acr login --name ${{ steps.tf.outputs.ACR_NAME }}
+
       - name: Get Signing Cert Key ID & Notation Credentials
         id: kid
         run: |
@@ -61,7 +64,7 @@ jobs:
       - name: Build and Publish Docker image
         run: |
           docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1 https://github.com/wabbit-networks/net-monitor.git#main
-          docker push -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1
+          docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v1
       - name: Terraform destroy
         run: terraform destroy -auto-approve
         working-directory: ./terraform
