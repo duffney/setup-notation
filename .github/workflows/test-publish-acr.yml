@@ -67,7 +67,7 @@ jobs:
           docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v${{ github.sha }}
       - name: Sign container image
         run: |
-          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} ${{ steps.tf.outputs.ACR_NAME }}.azurecr.io/net-monitor:${{ github.sha }} \
+          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} ${{ steps.tf.outputs.ACR_NAME }}.azurecr.io/net-monitor:v${{ github.sha }} \
           -u ${{ steps.kid.outputs.NOTATION_USERNAME }} \
           -p ${{ steps.kid.outputs.NOTATION_PASSWORD }}
       - name: Terraform destroy
