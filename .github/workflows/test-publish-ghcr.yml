@@ -1,8 +1,7 @@
-name: publish
+name: publish to GHCR
 on: [push]
 env:
   REGISTRY: ghcr.io
-  USER: Duffney
   IMAGE_NAME: net-monitor
 jobs:
   publish-image:
@@ -17,11 +16,11 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: Duffney
+          username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
       - name: Build and Publish Docker image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
-          docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
+          docker push ${{ env.REGISTRY }}/${{ githubt.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
       - name: Sign image
-        run: notation sign --signature-format cose ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        run: notation sign --signature-format cose ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
