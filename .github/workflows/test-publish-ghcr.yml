@@ -2,36 +2,26 @@ name: publish
 on: [push]
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ballerina
+  USER: Duffney
+  IMAGE_NAME: net-monitor
 jobs:
   publish-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: azure-resource-login #provide credentials from azure to use resources eg: key vault
-        uses: Azure/azure-resource-login-action@v1.0.0
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Setup Notation with azure-kv plugin
         uses: Duffney/setup-notation@v1.0.0
         with:
           version: 1.0.0-rc.7
-          key_name: ${{ secrets.AZURE_KEY }} #add secrets to store key name
-          certificate_key_id: ${{ secrets.AZURE_KEY_ID }} #add secrets to store id
-          plugin_name: notation-azure-kv
-          plugin_version:  0.5.0-rc.1
-      - name: Login to GitHub Container Registry #provide details to login into GitHub container regsitry
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Publish Docker image #Publishes to Github as a Package
+          username: Duffney
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Build and Publish Docker image
         run: |
-          docker build --no-cache=true . --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-          docker run ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }} 
-      - name: Verify key generation
-        run: notation key list 
-      - name: Sign the published Docker image
-        run: notation sign ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+          docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v${{ github.run_number} https://github.com/wabbit-networks/net-monitor.git#main
+          docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v${{ github.run_number}
+      - name: Sign image
+        run: notation sign --signature-format cose ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v${{ github.run_number}
