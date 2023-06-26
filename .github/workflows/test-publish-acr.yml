@@ -63,11 +63,11 @@ jobs:
           plugin_version: 0.6.0 
       - name: Build and Publish Docker image
         run: |
-          docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
-          docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:v${{ github.sha }}
+          docker build -t ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
+          docker push ${{ steps.tf.outputs.ACR_NAME}}.azurecr.io/net-monitor:${{ github.sha }}
       - name: Sign container image
         run: |
-          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} ${{ steps.tf.outputs.ACR_NAME }}.azurecr.io/net-monitor:v${{ github.sha }} \
+          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} ${{ steps.tf.outputs.ACR_NAME }}.azurecr.io/net-monitor:${{ github.sha }} \
           -u ${{ steps.kid.outputs.NOTATION_USERNAME }} \
           -p ${{ steps.kid.outputs.NOTATION_PASSWORD }}
       - name: Terraform destroy
