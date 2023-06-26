@@ -21,6 +21,6 @@ jobs:
       - name: Build and Publish Docker image
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
-          docker push ${{ env.REGISTRY }}/${{ githubt.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
       - name: Sign image
         run: notation sign --signature-format cose ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
