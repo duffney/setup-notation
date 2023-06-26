@@ -24,4 +24,6 @@ jobs:
           docker build -t ${{ env.REGISTRY }}/${github_actor_lowercase}/${{ env.IMAGE_NAME }}:${{ github.sha }} https://github.com/wabbit-networks/net-monitor.git#main
           docker push ${{ env.REGISTRY }}/${github_actor_lowercase}/${{ env.IMAGE_NAME }}:${{ github.sha }}
       - name: Sign image
-        run: notation sign --signature-format cose ${{ env.REGISTRY }}/${github_actor_lowercase}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        run: |
+          github_actor_lowercase=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
+          notation sign --signature-format cose ${{ env.REGISTRY }}/${github_actor_lowercase}/${{ env.IMAGE_NAME }}:${{ github.sha }}
