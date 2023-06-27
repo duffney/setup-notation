@@ -28,7 +28,7 @@ data "azurerm_client_config" "current" {}
 data "azuread_client_config" "current" {}
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.rg_name
+  name     = "${var.rg_name}${random_id.main.hex}"
   location = var.location
 }
 
