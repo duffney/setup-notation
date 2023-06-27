@@ -1,9 +1,6 @@
 name: publish to Azure Container Registry
 on: [push]
 
-env:
-  REGISTRY: ballerina.azurecr.io 
-  IMAGE_NAME: ballerina
 jobs:
   publish-image:
     runs-on: ubuntu-latest
