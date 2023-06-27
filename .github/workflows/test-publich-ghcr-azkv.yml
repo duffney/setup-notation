@@ -30,6 +30,14 @@ jobs:
           echo "CERT_NAME=$(terraform output -raw cert_name)" >> $GITHUB_OUTPUT
         working-directory: ./terraform/publish-ghcr-azkv
 
+      - name: Get signing cert kid
+        id: kid
+        run: |
+          keyID=$(az keyvault certificate show \
+            --vault-name ${{ steps.tf.outputs.AKV_NAME }} --name ${{ steps.tf.outputs.CERT_NAME }} \
+            --query "kid" --only-show-errors --output tsv)
+          echo "SIGN_CERT_KEY_ID=${keyID}" >> $GITHUB_OUTPUT
+
       - name: Setup Notation with azure-kv plugin
         uses: Duffney/setup-notation@v1.0.0
         with:
