@@ -63,8 +63,7 @@ jobs:
       - name: Sign image
         run: |
           github_actor_lowercase=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
-          notation sign --key ${{ steps.tf.outputs.CERT_NAME }} \
-          --signature-format cose \
+          notation sign --signature-format cose \
           ${{ env.REGISTRY }}/${github_actor_lowercase}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Terraform destroy
