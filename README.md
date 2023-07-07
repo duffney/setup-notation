@@ -1,6 +1,6 @@
-# setup-notation
+# Notation Action 
 
-> A GitHub Action that installs and configures the [Notation](https://github.com/notaryproject/notation) CLI for digitally signing Open Container Initiative (OCI) compliant artifacts.
+> `notation-action` is a GitHub Action that installs and configures the [Notation](https://github.com/notaryproject/notation) CLI for digitally signing Open Container Initiative (OCI) compliant artifacts.
 
 ## Usage
 
