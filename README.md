@@ -8,16 +8,16 @@ Setup the `notation` CLI:
 
 ```
 steps:
-- uses: Duffney/setup-notation@v1.0.0
+- uses: notaryproject/notation-action@v1.0.0
 ```
 
 A specific version of the `notation` CLI can be installed:
 
 ```
 steps:
-- uses: Duffney/setup-notation@v1.0.0
+- uses: notaryproject/notation-action@v1.0.0
   with:
-    version: 1.0.0-rc.1
+    version: 1.0.0-rc.7
 ```
 
 A [plugin for Azure Key Vault](https://github.com/Azure/notation-azure-kv) can be added to the `notation` CLI:
@@ -25,13 +25,13 @@ A [plugin for Azure Key Vault](https://github.com/Azure/notation-azure-kv) can b
 ```
 steps:
   - name: Setup Notation with azure-kv plugin
-    uses: Duffney/setup-notation@v1.0.0
+  - uses: notaryproject/notation-action@v1.0.0 
     with:
-      version: 1.0.0-rc.1 
+      version: 1.0.0-rc.7
       key_name: example
       certificate_key_id: https://rg-kv.vault.azure.net/keys/certname/2c12753ba2b44646bd27d4d447020018
       plugin_name: notation-azure-kv
-      plugin_version:  0.5.0-rc.1
+      plugin_version:  0.6.0 
 ```
 
 ## Inputs
